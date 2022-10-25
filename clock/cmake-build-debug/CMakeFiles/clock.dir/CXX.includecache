@@ -1,0 +1,16 @@
+#IncludeRegexLine: ^[ 	]*[#%][ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+E:/CWorkSpace/clock/Clock.cpp
+Clock.h
+E:/CWorkSpace/clock/Clock.h
+
+E:/CWorkSpace/clock/Clock.h
+iostream
+-
+
