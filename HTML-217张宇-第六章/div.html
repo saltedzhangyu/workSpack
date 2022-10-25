@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>div</title>
+    <style>
+        * {
+            padding: 0;
+            margin: 0;
+        }
+
+        .theme {
+            width: 150px;
+            border: 1px solid black;
+            padding: 10px;
+            margin: 50px;
+            font-size: 0;
+        }
+
+        .theme > div {
+            background: pink;
+            text-align: center;
+            width: 50px;
+            line-height: 50px;
+            color: white;
+            display: inline-block;
+            font-size: 12px;
+        }
+
+        .theme > div:hover {
+            background: aqua;
+        }
+
+        .theme > div:nth-child(2) {
+            margin-left: 50px;
+        }
+
+        .theme > div:nth-child(3) {
+            margin-left: 50px;
+            display: block;
+        }
+
+        .theme > div:nth-child(5) {
+            margin-left: 50px;
+        }
+
+    </style>
+</head>
+<body>
+    <div class="theme">
+        <div>链接1</div>
+        <div>链接2</div>
+        <div>链接3</div>
+        <div>链接4</div>
+        <div>链接5</div>
+    </div>
+</body>
+</html>
