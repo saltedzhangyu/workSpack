@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>card</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+
+        .main {
+            margin: 50px auto;
+            padding: 10px;
+            border: 1px solid black;
+            width: 331px;
+        }
+
+        .main > div {
+            background-image: url("./img/maple.jpg");
+            background-repeat: no-repeat;
+            height: 125px;
+            position: relative;
+        }
+
+        .main > div > div > p {
+            color: white;
+            background: rgba(0, 0, 0, .3);
+            position: absolute;
+            bottom: 0;
+            width: 100%;
+            text-align: center;
+        }
+
+        .main > p {
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="main">
+        <div>
+            <div>
+                <p>京秋魅力 相约共享香山红叶</p>
+            </div>
+        </div>
+        <p>时间: 11月16日 星期六 8:30</p>
+        <p>地点: 朝阳区西大望路珠江帝景K区正门前集合</p>
+    </div>
+</body>
+</html>
