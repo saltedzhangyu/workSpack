@@ -1,6 +1,6 @@
 new Promise((resolve, reject) => {
     setTimeout(() => {
-        reject("ok")
+        resolve("ok")
     }, 1000)
 }).then(value => {
     return new Promise((resolve, reject) => {
@@ -8,6 +8,7 @@ new Promise((resolve, reject) => {
     })
 }).then(value => {
     console.log(value)
+    return new Promise(() => {})
 }).then(value => {
     console.log(value)
 }).catch(reason => {
