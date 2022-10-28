@@ -5,10 +5,58 @@
     <title>Title</title>
 </head>
 <body>
-
+<button class="a">get</button>
+<button>post</button>
+<button>put</button>
+<button>delete</button>
 </body>
 <script src="https://cdn.bootcdn.net/ajax/libs/axios/0.21.1/axios.min.js"></script>
+<script src="../src/js/jquery.js"></script>
 <script>
-    console.log(axios)
+
+    $("button:eq(0)").click(function () {
+        axios({
+            method: "Get",
+            url: "http://localhost:3000/posts"
+        }).then(value => {
+            console.log(value)
+        })
+    })
+
+    $("button:eq(1)").click(function () {
+        axios({
+            method: "Post",
+            url: "http://localhost:3000/posts",
+            data: {
+                title: "123",
+                author: "test"
+            }
+        }).then(value => {
+            console.log(value)
+        })
+    })
+
+    $("button:eq(2)").click(function () {
+        axios({
+            method: "Put",
+            url: "http://localhost:3000/posts/2",
+            data: {
+                title: "321",
+                author: "tset"
+            }
+        }).then(value => {
+            console.log(value)
+        })
+    })
+
+    $("button:eq(3)").click(function () {
+        axios({
+            method: "Delete",
+            url: "http://localhost:3000/posts/2"
+        }).then(value => {
+            console.log(value)
+        })
+    })
+
 </script>
 </html>
