@@ -9,12 +9,15 @@
 <button>post</button>
 <button>put</button>
 <button>delete</button>
+<button>cancel</button>
 </body>
 <script src="https://cdn.bootcdn.net/ajax/libs/axios/0.21.1/axios.min.js"></script>
 <script src="../src/js/jquery.js"></script>
 <script>
 
     axios.defaults.baseURL = "http://localhost:3000"
+
+    let cancel = null
 
     axios.interceptors.request.use(function (config) {
         console.log("请求拦截器成功")
@@ -46,15 +49,22 @@
     })
 
     $("button:eq(1)").click(function () {
+        if (cancel !== null) {
+            cancel()
+        }
         axios({
             method: "Post",
             url: "/posts",
+            cancelToken: new axios.CancelToken(function (c) {
+                cancel = c
+            }),
             data: {
                 title: "123",
                 author: "test"
             }
         }).then(value => {
             console.log(value)
+            cancel = null
         })
     })
 
@@ -78,6 +88,10 @@
         }).then(value => {
             console.log(value)
         })
+    })
+    
+    $("button:eq(4)").click(function () {
+        cancel()
     })
 
 </script>
