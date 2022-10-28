@@ -16,9 +16,13 @@
 
     axios.defaults.baseURL = "http://localhost:3000"
 
+    const get = axios.create({
+        method: "get",
+        timeout: 2000
+    })
+
     $("button:eq(0)").click(function () {
-        axios({
-            method: "Get",
+        get({
             url: "/posts"
         }).then(value => {
             console.log(value)
