@@ -16,6 +16,22 @@
 
     axios.defaults.baseURL = "http://localhost:3000"
 
+    axios.interceptors.request.use(function (config) {
+        console.log("请求拦截器成功")
+        return config
+    }, function (error) {
+        console.log("请求拦截器失败")
+        return Promise.reject(error)
+    })
+
+    axios.interceptors.response.use(function (config) {
+        console.log("响应拦截器成功")
+        return config
+    }, function (error) {
+        console.log("响应拦截器失败")
+        return Promise.reject(error)
+    })
+
     const get = axios.create({
         method: "get",
         timeout: 2000
@@ -45,7 +61,7 @@
     $("button:eq(2)").click(function () {
         axios({
             method: "Put",
-            url: "/2",
+            url: "/posts/2",
             data: {
                 title: "321",
                 author: "tset"
@@ -58,7 +74,7 @@
     $("button:eq(3)").click(function () {
         axios({
             method: "Delete",
-            url: "2"
+            url: "/posts/4"
         }).then(value => {
             console.log(value)
         })
