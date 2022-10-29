@@ -73,6 +73,11 @@ function xhrAdapter(config) {
                 }
             }
         }
+        if (config.cancelToken) {
+            config.cancelToken.promise.then(value => {
+                xhr.abort()
+            })
+        }
     })
 }
 
@@ -86,6 +91,16 @@ function createInstance(config) {
         instance[key] = context[key]
     })
     return instance
+}
+
+function CancelToken(executor) {
+    let resolvePromise
+    this.promise = new Promise((resolve) => {
+        resolvePromise = resolve
+    })
+    executor(function () {
+        resolvePromise()
+    })
 }
 
 let axios = createInstance({method: "Get"})
@@ -108,9 +123,18 @@ axios.interceptors.response.use(function (config) {
 
 console.dir(axios)
 
+let cancel = null
+
+let cancelToken = new CancelToken(function (c) {
+    cancel = c
+})
+
 axios.get({
     url: "http://localhost:3000/posts",
-    method: "get"
+    method: "get",
+    cancelToken,
 }).then(value => {
     console.log(value)
 })
+
+cancel()
