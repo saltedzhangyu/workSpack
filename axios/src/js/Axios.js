@@ -2,17 +2,42 @@ function Axios(config) {
     // 配置项
     this.defaults = config;
     // 拦截器
-    this.intercepters = {
-        request: {},
-        response: {}
+    this.interceptors = {
+        request: new InterceptorManager(),
+        response: new InterceptorManager()
     }
 }
 
 Axios.prototype.request = function (config) {
     let promise = Promise.resolve(config)
-    let chains = [dispatchRequest, undefined]
-    return promise.then(chains[0], chains[1])
+    const chains = [dispatchRequest, undefined]
+
+    this.interceptors.request.handlers.forEach(item => {
+        chains.unshift(item.fulfilled, item.rejected)
+    })
+    this.interceptors.response.handlers.forEach(item => {
+        chains.push(item.fulfilled, item.rejected)
+    })
+
+    while (chains.length > 0) {
+        promise = promise.then(chains.shift(), chains.shift())
+    }
+
+    return promise
 }
+
+function InterceptorManager() {
+    this.handlers = []
+}
+
+InterceptorManager.prototype.use = function (fulfilled, rejected) {
+    this.handlers.push({
+            fulfilled,
+            rejected
+        }
+    )
+}
+
 
 Axios.prototype.get = function (config) {
     console.log("将通过get发送ajax请求")
@@ -58,16 +83,33 @@ function createInstance(config) {
         instance[key] = Axios.prototype[key].bind(context)
     })
     Object.keys(context).forEach(key => {
-        instance[key] = console[key]
+        instance[key] = context[key]
     })
     return instance
 }
 
 let axios = createInstance({method: "Get"})
 
+axios.interceptors.request.use(function (config) {
+    console.log("请求拦截器成功")
+    return config
+}, function (error) {
+    console.log("请求拦截器失败")
+    return Promise.reject(error)
+})
+
+axios.interceptors.response.use(function (config) {
+    console.log("响应拦截器成功")
+    return config
+}, function (error) {
+    console.log("响应拦截器失败")
+    return Promise.reject(error)
+})
+
+console.dir(axios)
 
 axios.get({
-    url:"http://localhost:3000/posts",
+    url: "http://localhost:3000/posts",
     method: "get"
 }).then(value => {
     console.log(value)
